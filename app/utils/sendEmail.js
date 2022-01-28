@@ -1,6 +1,8 @@
+require("dotenv").config({ path: "./config.env" });
 const nodemailer = require("nodemailer");
 
 const sendEmail = (options) => {
+  // 1. Create a transporter
   const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE,
     auth: {
@@ -9,6 +11,7 @@ const sendEmail = (options) => {
     },
   });
 
+  // 2. Define the email options
   const mailOptions = {
     from: process.env.EMAIL_FROM,
     to: options.to,
@@ -16,6 +19,7 @@ const sendEmail = (options) => {
     html: options.text,
   };
 
+  // 3. Send the email
   transporter.sendMail(mailOptions, function (err, info) {
     if (err) {
       console.log(err);
